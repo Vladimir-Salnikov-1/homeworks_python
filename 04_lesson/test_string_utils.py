@@ -16,6 +16,13 @@ def test_positive_capitilize(string, result):
     assert res == result
 
 
+@pytest.mark.parametrize("string", [None, 123, ["1", "2", "3"]])
+def test_negative_capitilize(string):
+    string1 = StringUtils()
+    with pytest.raises(AttributeError):
+        string1.capitilize(string)
+
+
 @pytest.mark.parametrize("string, result", [(" привет", "привет"),
                                             ("    здрасьте", "здрасьте"),
                                             ("привет", "привет"),
@@ -25,9 +32,6 @@ def test_positive_trim(string, result):
     trim = StringUtils()
     res = trim.trim(string)
     assert res == result
-
-# Убрать бы как нибудь параметр делитель в тесте снизу,
-# чтобы посмотреть делитель по-умолчанию
 
 
 @pytest.mark.parametrize("string, delimeter, result",
