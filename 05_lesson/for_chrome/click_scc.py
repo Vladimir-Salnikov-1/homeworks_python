@@ -22,8 +22,8 @@ except NoSuchElementException:
     sys.exit(1)
 
 # Кликните на синюю кнопку
-blue_button_selector = "button.btn.btn-primary"
-driver.find_element(By.CSS_SELECTOR, "button.btn.btn-primary").click()
+blue_button_selector = ".btn-primary"
+driver.find_element(By.CSS_SELECTOR, ".btn-primary").click()
 print("Кнопка успешно нажата")
 sleep(1)
 
