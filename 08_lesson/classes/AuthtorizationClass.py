@@ -1,5 +1,6 @@
 import requests
 from classes.Data_for_tests import Log
+from classes.ProjectClass import Project
 
 
 class Authtorization:
@@ -11,9 +12,8 @@ class Authtorization:
     def get_list_company_by_login(self, login, password):
         self.login = login
         self.password = password
-        headers = {
-            "Content-Type": "application/json"
-            }
+        head = Project()
+        headers = head.add_headers()
         payload = {
             "login": self.login,
             "password": self.password
@@ -27,9 +27,8 @@ class Authtorization:
         self.login = login
         self.password = password
         self.id_company = id_company
-        headers = {
-            "Content-Type": "application/json"
-            }
+        head = Project()
+        headers = head.add_headers()
         payload = {
             "login": self.login,
             "password": self.password,
@@ -56,9 +55,8 @@ class Authtorization:
         self.login = login
         self.password = password
         self.id_company = id_company
-        headers = {
-            "Content-Type": "application/json"
-            }
+        head = Project()
+        headers = head.add_headers()
         payload = {
             "login": self.login,
             "password": self.password,
@@ -70,9 +68,8 @@ class Authtorization:
 
     def delete_key(self, key):
         self.key = key
-        headers = {
-            "Content-Type": "application/json"
-            }
+        head = Project()
+        headers = head.add_headers()
         respons = requests.delete(Log.base_url + f"auth/keys/{self.key}", headers=headers)
         body_respons = respons.json()
         return body_respons
