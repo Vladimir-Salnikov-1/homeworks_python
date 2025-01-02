@@ -1,11 +1,11 @@
-from classes.AuthorClass import Authtoris
+from classes.AuthtorizationClass import Authtorization
 from classes.ProjectClass import Project
 from classes.Data_for_tests import Log
 
 
 # Получить список компаний
 def test_get_list_company_by_login():
-    object = Authtoris()
+    object = Authtorization()
     list_company = object.get_list_company_by_login(Log.log, Log.password)
     for company in list_company:
         assert "paging" in list_company
@@ -24,7 +24,7 @@ def test_get_list_company_by_login():
 
 # Получить список проектов
 def test_get_list_project():
-    object = Authtoris()
+    object = Authtorization()
     key = object.get_key_of_company(Log.log, Log.password, 1)
 
     object2 = Project()
@@ -50,7 +50,7 @@ def test_get_list_project():
 
 # Создать проект
 def test_create_project():
-    object = Authtoris()
+    object = Authtorization()
     key = object.get_key_of_company(Log.log, Log.password, 1)
 
     object2 = Project()
@@ -65,7 +65,7 @@ def test_create_project():
 
 # Получить проект по id
 def test_get_project_by_id():
-    object = Authtoris()
+    object = Authtorization()
     key = object.get_key_of_company(Log.log, Log.password, 1)
 
     object2 = Project()
@@ -81,7 +81,7 @@ def test_get_project_by_id():
 
 # Изменить название проекта
 def test_change_title_project():
-    object = Authtoris()
+    object = Authtorization()
     key = object.get_key_of_company(Log.log, Log.password, 1)
 
     object2 = Project()
@@ -99,7 +99,7 @@ def test_change_title_project():
 
 # Удалить проект
 def test_delete_project():
-    object = Authtoris()
+    object = Authtorization()
     key = object.get_key_of_company(Log.log, Log.password, 1)
 
     new_project = Project()

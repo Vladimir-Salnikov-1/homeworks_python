@@ -1,11 +1,11 @@
-from classes.AuthorClass import Authtoris
+from classes.AuthtorizationClass import Authtorization
 from classes.ProjectClass import Project
 from classes.Data_for_tests import Log
 
 
 # Создать проект с неверным типом данных в названии
 def test_create_project_wrong_data_type_in_title():
-    object = Authtoris()
+    object = Authtorization()
     key = object.get_key_of_company(Log.log, Log.password, 1)
 
     object2 = Project()
@@ -16,7 +16,7 @@ def test_create_project_wrong_data_type_in_title():
 
 # Получить проект по неверному id
 def test_get_project_by_wrong_id():
-    object = Authtoris()
+    object = Authtorization()
     key = object.get_key_of_company(Log.log, Log.password, 1)
 
     object2 = Project()
@@ -35,7 +35,7 @@ def test_get_list_project_with_wrong_key():
 
 # Изменить название проекта указав неверный тип данных в названии
 def test_change_title_with_wrong_type_new_title():
-    object = Authtoris()
+    object = Authtorization()
     key = object.get_key_of_company(Log.log, Log.password, 1)
 
     object2 = Project()
@@ -50,7 +50,7 @@ def test_change_title_with_wrong_type_new_title():
 
 # Удалить проект с несуществующим id
 def test_delete_project_with_wrong_id():
-    object = Authtoris()
+    object = Authtorization()
     key = object.get_key_of_company(Log.log, Log.password, 1)
 
     object2 = Project()
