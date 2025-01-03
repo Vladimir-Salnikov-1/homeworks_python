@@ -61,6 +61,7 @@ class Project:
 
     # Добавить заголовки
     def add_headers(self, key=None):
+        self.key = key
         headers = {
             "Content-Type": "application/json"
             }
