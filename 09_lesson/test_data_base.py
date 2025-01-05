@@ -1,56 +1,61 @@
-from sqlalchemy import create_engine, inspect, text
+from DBClass import DBPage
 
+# Настройка соединения
 db_connection_string = "postgresql+psycopg://postgres:123@localhost:5432/postgres"
-db = create_engine(db_connection_string)
+db_page = DBPage(db_connection_string)
 
 
+# Тест на соединение с базой данных
 def test_db_connection():
-    # Используем инспектор для получения информации о таблицах
-    inspector = inspect(db)
-    names = inspector.get_table_names()
-    assert names[1] == 'subject'
+    table_names = db_page.get_table_names()
+    required_tables = ['users', 'subject', 'student', 'group_student', 'teacher']
+    for table in required_tables:
+        assert table in table_names
+    assert 'users' in table_names
+    assert len(table_names) == 5
 
+# Тест на запрос пользователей
 def test_select():
-    connection = db.connect()  # Создаем соединение
-    sql_request = text("select * from users")
-    result = connection.execute(sql_request)
-    rows = result.mappings().all()   # Получаем результат в виде словарей
-    row1 = rows[0]
+    users = db_page.select_users()
+    assert users[0]['user_id'] == 42568
+    assert users[0]['user_email'] == "igorpetrov@mail.ru"
+    assert len(users) > 1000
 
-    assert row1['user_id'] == 42568
-    assert row1['user_email'] == "igorpetrov@mail.ru"
 
-    connection.close()      # Закрываем соединение
-
+# Тест на добавление новой строки
 def test_insert():
-    connection = db.connect()
-    transaction = connection.begin()
+    test_email = "test_mail@mail.ru"
+    db_page.insert_user(test_email)
 
-    sql = text("INSERT INTO users(user_email) VALUES ('test_mail@mail.ru')")
-    connection.execute(sql, {"new_name": "SkyPro"})
-    
+    # Проверяем, что пользователь добавлен
+    users = db_page.select_users()
+    last_user = users[-1]['user_email']
+    assert any(user['user_email'] == test_email for user in users)
+    assert last_user == test_email
+    db_page.delete_user(test_email)
 
-    transaction.commit()
-    connection.close()
 
+# Тест на удаление строки
 def test_delete():
-    connection = db.connect()
-    transaction = connection.begin()
+    test_email = "test_mail@mail.ru"
+    db_page.insert_user(test_email)
+    db_page.delete_user(test_email)
 
-    sql = text("DELETE FROM users WHERE user_email = 'test_mail@mail.ru'")
-    connection.execute(sql, {"id": 602})
-   
+    # Проверяем, что пользователь удален
+    users = db_page.select_users()
+    assert not any(user['user_email'] == test_email for user in users)
 
-    transaction.commit()
-    connection.close()
 
+# Тест на изменение строки
 def test_update():
-    connection = db.connect()
-    transaction = connection.begin()
+    old_email = "test_mail@mail.ru"
+    new_email = "test2_mail@mail.ru"
+    db_page.insert_user(old_email)
+    db_page.update_user_email(old_email, new_email)
 
-    sql = text("UPDATE users SET user_email = 'test2_mail@mail.ru' WHERE user_email = 'test_mail@mail.ru'")
-    connection.execute(sql, {"descr": 'New descr', "id": 602})
-    
-
-    transaction.commit()
-    connection.close()
+    # Проверяем, что email обновлен
+    users = db_page.select_users()
+    last_user = users[-1]['user_email']
+    assert any(user['user_email'] == new_email for user in users)
+    assert last_user == new_email
+    db_page.delete_user(new_email)
