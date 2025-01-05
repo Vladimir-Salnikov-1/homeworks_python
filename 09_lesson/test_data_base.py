@@ -24,20 +24,20 @@ def test_select():
 
 # Тест на добавление новой строки
 def test_insert():
-    test_email = "test_mail@mail.ru"
-    db_page.insert_user(test_email)
+    fake_email = db_page.create_fake_email()
+    db_page.insert_user(fake_email)
 
     # Проверяем, что пользователь добавлен
     users = db_page.select_users()
     last_user = users[-1]['user_email']
-    assert any(user['user_email'] == test_email for user in users)
-    assert last_user == test_email
-    db_page.delete_user(test_email)
+    assert any(user['user_email'] == fake_email for user in users)
+    assert last_user == fake_email
+    db_page.delete_user(fake_email)
 
 
 # Тест на удаление строки
 def test_delete():
-    test_email = "test_mail@mail.ru"
+    test_email = db_page.create_fake_email()
     db_page.insert_user(test_email)
     db_page.delete_user(test_email)
 
@@ -48,8 +48,8 @@ def test_delete():
 
 # Тест на изменение строки
 def test_update():
-    old_email = "test_mail@mail.ru"
-    new_email = "test2_mail@mail.ru"
+    old_email = db_page.create_fake_email()
+    new_email = db_page.create_fake_email()
     db_page.insert_user(old_email)
     db_page.update_user_email(old_email, new_email)
 
