@@ -1,6 +1,7 @@
 from sqlalchemy import create_engine, inspect, text
 from faker import Faker
 
+
 class DBPage:
     def __init__(self, db_connection_string):
         self.engine = create_engine(db_connection_string)
@@ -23,7 +24,9 @@ class DBPage:
         with self.engine.connect() as connection:
             transaction = connection.begin()
             try:
-                sql_request = text("INSERT INTO users(user_email) VALUES (:email)")
+                sql_request = text(
+                    "INSERT INTO users(user_email) VALUES (:email)"
+                    )
                 connection.execute(sql_request, {"email": email})
                 transaction.commit()
             except Exception as e:
@@ -35,7 +38,9 @@ class DBPage:
         with self.engine.connect() as connection:
             transaction = connection.begin()
             try:
-                sql_request = text("DELETE FROM users WHERE user_email = :email")
+                sql_request = text(
+                    "DELETE FROM users WHERE user_email = :email"
+                    )
                 connection.execute(sql_request, {"email": email})
                 transaction.commit()
             except Exception as e:
@@ -47,8 +52,13 @@ class DBPage:
         with self.engine.connect() as connection:
             transaction = connection.begin()
             try:
-                sql_request = text("UPDATE users SET user_email = :new_email WHERE user_email = :old_email")
-                connection.execute(sql_request, {"new_email": new_email, "old_email": old_email})
+                sql_request = text(
+                    "UPDATE users SET user_email = :new_email WHERE user_email = :old_email"
+                    )
+                connection.execute(sql_request, {
+                    "new_email": new_email,
+                    "old_email": old_email
+                    })
                 transaction.commit()
             except Exception as e:
                 transaction.rollback()

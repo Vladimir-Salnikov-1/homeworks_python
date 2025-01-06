@@ -12,11 +12,17 @@ def test_db_connection():
     for table in required_tables:
         assert table in table_names
     assert 'users' in table_names
-    assert len(table_names) == 5
+    assert len(table_names) == len(required_tables)
+
 
 # Тест на запрос пользователей
 def test_select():
     users = db_page.select_users()
+    required_fields = ['user_id', 'user_email', 'subject_id']
+
+    for user in users:
+        for field in required_fields:
+            assert field in user
     assert users[0]['user_id'] == 42568
     assert users[0]['user_email'] == "igorpetrov@mail.ru"
     assert len(users) > 1000
@@ -31,7 +37,7 @@ def test_insert():
     users = db_page.select_users()
     last_user = users[-1]['user_email']
     assert any(user['user_email'] == fake_email for user in users)
-    assert last_user == fake_email
+    assert last_user == fake_email, "email последнего пользователя не совпадает с созданным email"
     db_page.delete_user(fake_email)
 
 
@@ -43,7 +49,7 @@ def test_delete():
 
     # Проверяем, что пользователь удален
     users = db_page.select_users()
-    assert not any(user['user_email'] == test_email for user in users)
+    assert not any(user['user_email'] == test_email for user in users), "Пользователь с таким email все еще существует"
 
 
 # Тест на изменение строки
