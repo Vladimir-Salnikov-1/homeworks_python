@@ -8,7 +8,7 @@ class DBPage:
 
     # Возвращает список таблиц в базе данных
     def get_table_names(self):
-        with self.engine.connect() as connection:
+        with self.engine.connect():
             inspector = inspect(self.engine)
             return inspector.get_table_names()
 
@@ -53,7 +53,8 @@ class DBPage:
             transaction = connection.begin()
             try:
                 sql_request = text(
-                    "UPDATE users SET user_email = :new_email WHERE user_email = :old_email"
+                    "UPDATE users SET user_email = :new_email \
+                        WHERE user_email = :old_email"
                     )
                 connection.execute(sql_request, {
                     "new_email": new_email,
