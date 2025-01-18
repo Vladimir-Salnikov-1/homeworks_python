@@ -2,11 +2,18 @@ from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service as ChromeService
 from pages.ShopPage import ShopPage
+import allure
 
 
+@allure.epic("Тестирование магазина")
+@allure.feature("Подсчет итоговой суммы")
+@allure.title("Подсчет итоговой суммы трех товаров")
+@allure.description("Данный тест проверяет правильность подсчета итоговой\
+    суммы трех товаров добавленных в корзину")
 def test_total_sum():
-    browser = webdriver.Chrome(
-        service=ChromeService(ChromeDriverManager().install()))
+    with allure.step("Иницилируем хром драйвер"):
+        browser = webdriver.Chrome(
+            service=ChromeService(ChromeDriverManager().install()))
 
     shop_page = ShopPage(browser)
 
@@ -23,6 +30,7 @@ def test_total_sum():
     shop_page.press_button_continue()
     itog_sum = shop_page.get_itog_sum()
 
-    assert itog_sum == "$58.29", "Ошибка. Итоговая сумма не верна"
+    with allure.step(f"Проверить что итоговая сумма = {itog_sum}"):
+        assert itog_sum == "$58.29", "Ошибка. Итоговая сумма не верна"
 
     browser.quit()
