@@ -11,7 +11,6 @@ class ShopPage:
         self._browser.maximize_window()
 
     # Заходим на сайт на страницу авторизации:
-    @allure.step("Зайти на сайт")
     def open_page_authorization(self):
         """Этот метод заходит на сайт на страницу авторизации."""
         with allure.step("Зайти на сайт"):
@@ -22,7 +21,6 @@ class ShopPage:
                 )
 
     # Вводим логин:
-    @allure.step("Ввести логин ({login})")
     def input_login(self, login: str):
         """Этот метод принимает на вход Логин
         и вводит его в соответствующее поле."""
@@ -32,7 +30,6 @@ class ShopPage:
         input_username.send_keys(login)
 
     # Вводим пароль:
-    @allure.step("Ввести пароль ({password})")
     def input_password(self, password: str):
         """Этот метод принимает на вход Пароль
         и вводит его в соответствующее поле."""
@@ -42,7 +39,6 @@ class ShopPage:
         input_password.send_keys(password)
 
     # Нажимаем на кнопку Login:
-    @allure.step("Нажать на кнопку login")
     def press_button_login(self):
         """Этот метод нажимает на кнопку Login
         и ждет появления новой страницы."""
@@ -56,7 +52,6 @@ class ShopPage:
                     (By.CSS_SELECTOR, ".inventory_item_description")))
 
     # Добавляем необходимые товары в корзину:
-    @allure.step("Добавить необходимые товары в корзину")
     def add_the_desired_items_to_the_cart(self):
         """Этот метод добавляет необходимые товары в корзину."""
         with allure.step("Добавить 1 товар"):
@@ -73,7 +68,6 @@ class ShopPage:
             add_onesie.click()
 
     # Переходим в корзину:
-    @allure.step("Перейти в корзину")
     def go_in_cart(self):
         """Этот метод переходит в корзину,
         и ждет появления необходимых элементов."""
@@ -86,7 +80,6 @@ class ShopPage:
                 )
 
     # Нажимаем на кнопку checkout:
-    @allure.step("Нажать на кнопку Checkout")
     def press_button_checkout(self):
         """Этот метод нажимает на кнопку Checkout,
         и ждет появления необходимых элементов."""
@@ -98,7 +91,6 @@ class ShopPage:
                     (By.CSS_SELECTOR, ".form_input")))
 
     # Вводим Имя:
-    @allure.step("Ввести имя ({first_name})")
     def input_first_name(self, first_name: str):
         """Этот метод принимает на вход параметр Имя
         и вводит его в соответствующее поле."""
@@ -111,7 +103,6 @@ class ShopPage:
             input_first_name.send_keys(first_name)
 
     # Вводим Фамилию:
-    @allure.step("Ввести фамилию  ({last_name})")
     def input_last_name(self, last_name: str):
         """Этот метод принимает на вход параметр Фамилия
         и вводит его в соответствующее поле."""
@@ -124,7 +115,6 @@ class ShopPage:
             input_last_name.send_keys(last_name)
 
     # Вводим почтовый индекс:
-    @allure.step("Ввести почтовый индекс ({postal_code})")
     def input_postal_code(self, postal_code: str):
         """Этот метод принимает на вход параметр Почтовый индекс
         и вводит его в соответствующее поле."""
@@ -137,13 +127,11 @@ class ShopPage:
             input_username.send_keys(postal_code)
 
     # Нажимаем на кнопку continue:
-    @allure.step("Нажать на кнопку Continue")
     def press_button_continue(self):
         """Этот метод нажимает на кнопку Continue."""
         self._browser.find_element(By.CSS_SELECTOR, "#continue").click()
 
     # Получаем итоговую сумму (без лишних слов):
-    @allure.step("Получить итоговую сумму")
     def get_itog_sum(self) -> str:
         """Этот метод получает итоговую сумму всех заказов"""
         with allure.step("Получить весь текст с итоговой суммой"):

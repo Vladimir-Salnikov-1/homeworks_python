@@ -14,7 +14,7 @@ def test_illumination_in_form():
     with allure.step("Иницилируем хром драйвер."):
         browser = webdriver.Chrome(
             service=ChromeService(ChromeDriverManager().install()))
-    with allure.step("Создаем объект FormPage"):
+    with allure.step("Создаем объект класса FormPage"):
         form_page = FormPage(browser)
 
     with allure.step("Отрыть сайт"):
