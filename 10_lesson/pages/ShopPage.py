@@ -14,7 +14,9 @@ class ShopPage:
     def open_page_authorization(self):
         """Этот метод заходит на сайт на страницу авторизации."""
         with allure.step("Зайти на сайт"):
-            self._browser.get("https://www.saucedemo.com/")
+            site_url = "https://www.saucedemo.com/"
+            self._browser.get(site_url)
+            allure.attach(site_url, "Адрес сайта")
         with allure.step("Подождать прогрузки всего сайта"):
             WebDriverWait(self._browser, 10, 0.1).until(
                 EC.visibility_of_all_elements_located((By.CSS_SELECTOR, "div"))
@@ -28,6 +30,7 @@ class ShopPage:
             By.CSS_SELECTOR, "#user-name")
         input_username.clear()
         input_username.send_keys(login)
+        allure.attach(login, "Логин")
 
     # Вводим пароль:
     def input_password(self, password: str):
@@ -37,6 +40,7 @@ class ShopPage:
             By.CSS_SELECTOR, "#password")
         input_password.clear()
         input_password.send_keys(password)
+        allure.attach(password, "Пароль")
 
     # Нажимаем на кнопку Login:
     def press_button_login(self):
@@ -46,7 +50,7 @@ class ShopPage:
             button_login = self._browser.find_element(
                 By.CSS_SELECTOR, "#login-button")
             button_login.click()
-        with allure.step("Подождат прогрузки новой страницы"):
+        with allure.step("Подождать прогрузки новой страницы"):
             WebDriverWait(self._browser, 10, 0.1).until(
                 EC.visibility_of_all_elements_located(
                     (By.CSS_SELECTOR, ".inventory_item_description")))
@@ -58,14 +62,18 @@ class ShopPage:
             add_backpack = self._browser.find_element(
                 By.CSS_SELECTOR, "#add-to-cart-sauce-labs-backpack")
             add_backpack.click()
+            allure.attach("#add-to-cart-sauce-labs-backpack", "id 1 товара")
         with allure.step("Добавить 2 товар"):
             add_t_shirt = self._browser.find_element(
                 By.CSS_SELECTOR, "#add-to-cart-sauce-labs-bolt-t-shirt")
             add_t_shirt.click()
+            allure.attach("#add-to-cart-sauce-labs-bolt-t-shirt", "id 2 \
+                товара")
         with allure.step("Добавить 3 товар"):
             add_onesie = self._browser.find_element(
                 By.CSS_SELECTOR, "#add-to-cart-sauce-labs-onesie")
             add_onesie.click()
+            allure.attach("#add-to-cart-sauce-labs-onesie", "id 3 товара")
 
     # Переходим в корзину:
     def go_in_cart(self):
@@ -101,6 +109,7 @@ class ShopPage:
             input_first_name.clear()
         with allure.step("Ввести имя"):
             input_first_name.send_keys(first_name)
+            allure.attach(first_name, "Имя")
 
     # Вводим Фамилию:
     def input_last_name(self, last_name: str):
@@ -113,6 +122,7 @@ class ShopPage:
             input_last_name.clear()
         with allure.step("Ввести фамилию"):
             input_last_name.send_keys(last_name)
+            allure.attach(last_name, "Фамилия")
 
     # Вводим почтовый индекс:
     def input_postal_code(self, postal_code: str):
@@ -125,6 +135,7 @@ class ShopPage:
             input_username.clear()
         with allure.step("Ввести почтовый индекс"):
             input_username.send_keys(postal_code)
+            allure.attach(postal_code, "Почтовый индекс")
 
     # Нажимаем на кнопку continue:
     def press_button_continue(self):
@@ -137,6 +148,8 @@ class ShopPage:
         with allure.step("Получить весь текст с итоговой суммой"):
             total = self._browser.find_element(
                 By.CSS_SELECTOR, "[data-test='total-label'").text
+            allure.attach(total, "Весь текст с итоговой суммой")
         with allure.step("Вычленить из этого текста только сумму"):
             total = total.replace("Total: ", "")
+            allure.attach(total, "Только сумма")
         return total
