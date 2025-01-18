@@ -14,8 +14,8 @@ def test_result_15_after_3_seconds():
     with allure.step("Инициализируем хром драйвер"):
         browser = webdriver.Chrome(
             service=ChromeService(ChromeDriverManager().install()))
-
-    calculator_page = CalculatorPage(browser)
+    with allure.step("Создаем объект CalculatorPage"):
+        calculator_page = CalculatorPage(browser)
 
     with allure.step("Открыть калькулятор"):
         calculator_page.open_calculator()
