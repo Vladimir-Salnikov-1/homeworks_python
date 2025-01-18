@@ -15,7 +15,8 @@ class FormPage:
         """Этот метод открывает сайт с формой и ждет
         появления необходимых элементов."""
         with allure.step("Отрыть сайт"):
-            site = "https://bonigarcia.dev/selenium-webdriver-java/data-types.html"
+            site = "https://bonigarcia.dev/selenium-webdriver-" \
+                   "java/data-types.html"
             self._browser.get(site)
             allure.attach(site, "Адрес сайта")
         with allure.step("Дождаться наличия необходимого элемента"):

@@ -16,9 +16,10 @@ class CalculatorPage:
         """Этот метод открывает калькулятор и ждет появления
         необходимых элементов."""
         with allure.step("Открыть сайт"):
-            self._browser.get(
-                "https://bonigarcia.dev/selenium-webdriver-" +
-                "java/slow-calculator.html")
+            site_url = "https://bonigarcia.dev/selenium-webdriver-" \
+                       "java/slow-calculator.html"
+            self._browser.get(site_url)
+            allure.attach(site_url, "Адрес сайта")
 
         with allure.step("Дождаться прогрузки страницы"):
             WebDriverWait(self._browser, 10).until(
@@ -27,7 +28,7 @@ class CalculatorPage:
             )
 
     # Вводим значение в поле ввода секунд ожидания, фиксируем значение:
-    def fill_form(self, second: int) -> str:
+    def fill_form(self, second: int) -> int:
         """Этот метод принимает на вход параметр "секунды",
         вводит это значение в поле ввода секунд ожидания,
         фиксирует значение."""
@@ -40,6 +41,8 @@ class CalculatorPage:
         with allure.step("Берем значение атрибута value из формы ввода"):
             input_text = int(self._browser.find_element(
                 By.CSS_SELECTOR, "#delay").get_attribute("value"))
+            allure.attach(str(input_text), "Значение атрибута value \
+                из формы ввода")
         return input_text
 
     # Нажимаем кнопку 7:
@@ -80,6 +83,7 @@ class CalculatorPage:
             with allure.step(f"Высчитать время ожидания ({
                     int(end_time - start_time)})"):
                 waiting_time = int(end_time - start_time)
+                allure.attach(str(waiting_time), "Полученое время ожидания")
         return waiting_time
 
     # Получаем и фиксируем ответ:
@@ -88,4 +92,5 @@ class CalculatorPage:
         переводит его в текстовое значение"""
         result_in_window = self._browser.find_element(
             By.CSS_SELECTOR, ".screen").text
+        allure.attach(str(result_in_window), "Полученый ответ от калькулятора")
         return result_in_window
