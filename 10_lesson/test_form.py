@@ -2,11 +2,18 @@ from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service as ChromeService
 from pages.FormPage import FormPage
+import allure
 
 
+@allure.epic("Тестирование Формы")
+@allure.feature("Проверка подсветки поля с невалидным значением")
+@allure.title("Пустое поле zip-code")
+@allure.description("В результате теста проверяется что поле zip-code\
+    подсвечивается крассным цветом если введено невалидное значение")
 def test_illumination_in_form():
-    browser = webdriver.Chrome(
-        service=ChromeService(ChromeDriverManager().install()))
+    with allure.step("Иницилируем хром драйвер."):
+        browser = webdriver.Chrome(
+            service=ChromeService(ChromeDriverManager().install()))
 
     form_page = FormPage(browser)
 
@@ -24,10 +31,12 @@ def test_illumination_in_form():
     form_page.press_button_submit()
 
     r_cl = form_page.get_class_red()
-    assert "alert-danger" in r_cl, f"в поле нет класса {r_cl}"
+    with allure.step("Проверить что в классе элемента есть 'alert-danger"):
+        assert "alert-danger" in r_cl, f"в поле нет класса {r_cl}"
 
     len_green_fields = form_page.get_class_green()
-    assert len_green_fields == 9, (
-        f"Ожидается 9 зеленых полей, но найдено {len(len_green_fields)}")
+    with allure.step("Проверить что оставшихся полей подсвеченных полей 9"):
+        assert len_green_fields == 9, (
+            f"Ожидается 9 зеленых полей, но найдено {len(len_green_fields)}")
 
     browser.quit()
