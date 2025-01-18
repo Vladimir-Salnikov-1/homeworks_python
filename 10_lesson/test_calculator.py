@@ -17,13 +17,20 @@ def test_result_15_after_3_seconds():
 
     calculator_page = CalculatorPage(browser)
 
-    calculator_page.open_calculator()
-    input_text = calculator_page.fill_form(3)
-    calculator_page.click_button_7()
-    calculator_page.click_button_plus()
-    calculator_page.click_button_8()
-    waiting_time = calculator_page.click_button_equal()
-    result_in_window = calculator_page.get_result()
+    with allure.step("Открыть калькулятор"):
+        calculator_page.open_calculator()
+    with allure.step("Ввести в форму секунды"):
+        input_text = calculator_page.fill_form(3)
+    with allure.step("Нажать кнопку 7"):
+        calculator_page.click_button_7()
+    with allure.step("Нажать кнопку +"):
+        calculator_page.click_button_plus()
+    with allure.step("Нажать кнопку 8"):
+        calculator_page.click_button_8()
+    with allure.step("Нажать кнопку ="):
+        waiting_time = calculator_page.click_button_equal()
+    with allure.step("Получить ответ из окошка калькулятора"):
+        result_in_window = calculator_page.get_result()
 
     with allure.step("Проверяем что введенное время = времени ожидания"):
         assert waiting_time == input_text, f"Ошибка. Введенное время: {

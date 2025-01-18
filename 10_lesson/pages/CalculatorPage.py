@@ -12,7 +12,6 @@ class CalculatorPage:
         self._browser.maximize_window()
 
     # Открываем калькулятор, ждем появления необходимых элементов:
-    @allure.step("Открыть калькулятор")
     def open_calculator(self):
         """Этот метод открывает калькулятор и ждет появления
         необходимых элементов."""
@@ -28,7 +27,6 @@ class CalculatorPage:
             )
 
     # Вводим значение в поле ввода секунд ожидания, фиксируем значение:
-    @allure.step("Ввести в форму секунды, в данном случае: {second} сек.")
     def fill_form(self, second: int) -> str:
         """Этот метод принимает на вход параметр "секунды",
         вводит это значение в поле ввода секунд ожидания,
@@ -37,7 +35,7 @@ class CalculatorPage:
             input = self._browser.find_element(By.CSS_SELECTOR, "#delay")
         with allure.step("Очищаем поле ввода"):
             input.clear()
-        with allure.step("Вводим необходимое значение"):
+        with allure.step(f"Вводим необходимое значение ({second})"):
             input.send_keys(second)
         with allure.step("Берем значение атрибута value из формы ввода"):
             input_text = int(self._browser.find_element(
@@ -45,28 +43,24 @@ class CalculatorPage:
         return input_text
 
     # Нажимаем кнопку 7:
-    @allure.step("Нажать кнопку 7")
     def click_button_7(self):
         """Этот метод нажимает на калькуляторе кнопку "7"."""
         ls = self._browser.find_elements(By.CSS_SELECTOR, ".btn")
         ls[1].click()
 
     # Нажимаем кнопку +:
-    @allure.step("Нажать кнопку +")
     def click_button_plus(self):
         """Этот метод нажимает на калькуляторе кнопку "+"."""
         ls = self._browser.find_elements(By.CSS_SELECTOR, ".btn")
         ls[4].click()
 
     # Нажимаем кнопку 8:
-    @allure.step("Нажать кнопку 8")
     def click_button_8(self):
         """Этот метод нажимает на калькуляторе кнопку "8"."""
         ls = self._browser.find_elements(By.CSS_SELECTOR, ".btn")
         ls[2].click()
 
     # Нажимаем кнопку =, фиксируем время ожидания ответа:
-    @allure.step("Нажать кнопку =")
     def click_button_equal(self) -> int:
         """Этот метод нажимает на калькуляторе кнопку "=" и фиксирует
         время ожидания"""
@@ -83,12 +77,12 @@ class CalculatorPage:
                         (By.CSS_SELECTOR, ".screen"), "15"))
             with allure.step("Останавливаем время"):
                 end_time = time.time()
-            with allure.step("берем значение из нашего секундомера"):
+            with allure.step(f"Высчитать время ожидания ({
+                    int(end_time - start_time)})"):
                 waiting_time = int(end_time - start_time)
         return waiting_time
 
     # Получаем и фиксируем ответ:
-    @allure.step("Получить ответ из окошка калькулятора")
     def get_result(self) -> str:
         """Этот метод берет значение из окошка калькулятора и
         переводит его в текстовое значение"""
