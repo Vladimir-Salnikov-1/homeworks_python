@@ -15,9 +15,9 @@ class FormPage:
         """Этот метод открывает сайт с формой и ждет
         появления необходимых элементов."""
         with allure.step("Отрыть сайт"):
-            self._browser.get(
-                "https://bonigarcia.dev/selenium-webdriver-" +
-                "java/data-types.html")
+            site = "https://bonigarcia.dev/selenium-webdriver-java/data-types.html"
+            self._browser.get(site)
+            allure.attach(site, "Адрес сайта")
         with allure.step("Дождаться наличия необходимого элемента"):
             WebDriverWait(self._browser, 10).until(
                 EC.presence_of_element_located((By.CSS_SELECTOR, "main"))
@@ -29,6 +29,7 @@ class FormPage:
         в соответствующее поле."""
         self._browser.find_element(
             By.CSS_SELECTOR, "[name='first-name']").send_keys(first_name)
+        allure.attach(first_name, "Имя")
 
     # Вводим Фамилию:
     def send_last_name(self, last_name: str):
@@ -36,6 +37,7 @@ class FormPage:
         в соответствующее поле."""
         self._browser.find_element(
             By.CSS_SELECTOR, "[name='last-name']").send_keys(last_name)
+        allure.attach(last_name, "Фамилия")
 
     # Вводим адрес:
     def send_address(self, address: str):
@@ -43,6 +45,7 @@ class FormPage:
         в соответствующее поле."""
         self._browser.find_element(
             By.CSS_SELECTOR, "[name='address']").send_keys(address)
+        allure.attach(address, "Адрес")
 
     # Вводим почту:
     def send_email(self, email: str):
@@ -50,6 +53,7 @@ class FormPage:
         в соответствующее поле."""
         self._browser.find_element(
             By.CSS_SELECTOR, "[name='e-mail']").send_keys(email)
+        allure.attach(email, "email")
 
     # Вводим номер телефона:
     def send_phone(self, phone: str):
@@ -57,6 +61,7 @@ class FormPage:
         в соответствующее поле."""
         self._browser.find_element(
             By.CSS_SELECTOR, "[name='phone']").send_keys(phone)
+        allure.attach(phone, "Номер телефона")
 
     # Вводим зип-код:
     def send_zip_code(self, zip_code: str):
@@ -64,6 +69,7 @@ class FormPage:
         в соответствующее поле."""
         self._browser.find_element(
             By.CSS_SELECTOR, "[name='zip-code']").send_keys(zip_code)
+        allure.attach(zip_code, "zip-code")
 
     # Вводим город:
     def send_city(self, city: str):
@@ -71,6 +77,7 @@ class FormPage:
         в соответствующее поле."""
         self._browser.find_element(
             By.CSS_SELECTOR, "[name='city']").send_keys(city)
+        allure.attach(city, "Город")
 
     # Вводим страну:
     def send_country(self, country: str):
@@ -78,6 +85,7 @@ class FormPage:
         в соответствующее поле."""
         self._browser.find_element(
             By.CSS_SELECTOR, "[name='country']").send_keys(country)
+        allure.attach(country, "Страна")
 
     # Вводим должность:
     def send_job_position(self, job_position: str):
@@ -85,6 +93,7 @@ class FormPage:
         в соответствующее поле."""
         self._browser.find_element(
             By.CSS_SELECTOR, "[name='job-position']").send_keys(job_position)
+        allure.attach(job_position, "Должность")
 
     # Вводим компанию:
     def send_company(self, company: str):
@@ -92,6 +101,7 @@ class FormPage:
         в соответствующее поле."""
         self._browser.find_element(
             By.CSS_SELECTOR, "[name='company']").send_keys(company)
+        allure.attach(company, "Компания")
 
     # Нажимаем кнопку submit:
     def press_button_submit(self):
@@ -107,6 +117,7 @@ class FormPage:
         """Этот метод получает значение класса поля zip-code."""
         classs = self._browser.find_element(
             By.CSS_SELECTOR, "#zip-code").get_attribute("class")
+        allure.attach(classs, "Полученное значение атрибута class у зип кода")
         return classs
 
     # Получаем количество элементов отмечнных зеленым цветом:
@@ -115,4 +126,7 @@ class FormPage:
         отмечнных зеленым цветом."""
         green_fields = self._browser.find_elements(
             By.CSS_SELECTOR, ".alert-success")
-        return len(green_fields)
+        number_or_green_fields = len(green_fields)
+        allure.attach(str(number_or_green_fields), "Полей отмечнных\
+                      зеленым цветом")
+        return number_or_green_fields
