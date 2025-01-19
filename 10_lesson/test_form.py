@@ -10,6 +10,7 @@ import allure
 @allure.title("Пустое поле zip-code")
 @allure.description("В результате теста проверяется что поле zip-code\
     подсвечивается крассным цветом если введено невалидное значение")
+@allure.severity("critical")
 def test_illumination_in_form():
     with allure.step("Иницилируем хром драйвер."):
         browser = webdriver.Chrome(

@@ -10,6 +10,7 @@ import allure
 @allure.title("Подсчет итоговой суммы трех товаров")
 @allure.description("Данный тест проверяет правильность подсчета итоговой\
     суммы трех товаров добавленных в корзину")
+@allure.severity("critical")
 def test_total_sum():
     with allure.step("Иницилируем хром драйвер"):
         browser = webdriver.Chrome(

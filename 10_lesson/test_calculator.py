@@ -10,6 +10,7 @@ import allure
 @allure.title("результат 15 за 3 секунды")
 @allure.description("В результате теста должно вывестись на экран калькулятора\
     результат операции ровно за время прописанное в спец. окошке")
+@allure.severity("critical")
 def test_result_15_after_3_seconds():
     with allure.step("Инициализируем хром драйвер"):
         browser = webdriver.Chrome(
